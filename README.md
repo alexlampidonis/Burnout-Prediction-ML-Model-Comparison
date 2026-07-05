@@ -23,9 +23,9 @@ The explanatory/HR analysis conducted on real company survey data is **not inclu
 
 | Notebook | Description |
 |---|---|
-| `1_Train_Dataset_Preparation.ipynb` | Loads the public burnout dataset, handles missing values, explores feature distributions and correlations, engineers the tenure feature, one-hot encodes categorical variables, and exports the cleaned dataset for training. |
-| `2_Tuned_XGBoost_New_Data.ipynb` | Loads the prepared training data and the (randomly generated) new dataset built from the questionnaire schema, aligns their feature columns, and evaluates both the default-tuned and Optuna-tuned XGBoost models on this new data. |
-| `3_Training_Model_Comparison.ipynb` | Trains and validates seven regression models (Linear Regression, Lasso, Random Forest, XGBoost, MLP, SVR, Voting Regressor) using nested cross-validation, statistically compares their performance, and further tunes the best model (XGBoost) using Optuna. Includes learning curve, residuals, and feature importance analysis. |
+| `1.Train_Dataset_Preparation.ipynb` | Loads the public burnout dataset, handles missing values, explores feature distributions and correlations, engineers the tenure feature, one-hot encodes categorical variables, and exports the cleaned dataset for training. |
+| `2.Training_Model_Comparison.ipynb` | Trains and validates seven regression models (Linear Regression, Lasso, Random Forest, XGBoost, MLP, SVR, Voting Regressor) using nested cross-validation, statistically compares their performance, and further tunes the best model (XGBoost) using Optuna. Includes learning curve, residuals, and feature importance analysis. |
+| `3.Tuned_XGBoost_New_Data.ipynb` | Loads the prepared training data and the (randomly generated) new dataset built from the questionnaire schema, aligns their feature columns, and evaluates both the default-tuned and Optuna-tuned XGBoost models on this new data. |
 
 ## Methodology Summary
 

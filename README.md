@@ -24,16 +24,33 @@ The explanatory/HR analysis conducted on real company survey data is **not inclu
 
 ## Methodology Summary
 
-1. **Preprocessing**: Missing values dropped (distributions unaffected), categorical variables one-hot encoded, uninformative features (e.g., tenure) removed based on correlation analysis.
+1. **Preprocessing**: Missing values dropped (distributions unaffected — see below), categorical variables one-hot encoded, uninformative features (e.g., tenure) removed based on correlation analysis.
+
+   <img src="images/Distributions_Comparison.png" alt="Distributions before and after dropping missing values" width="800"/>
+
+   The correlation matrix below guided feature selection: *Burn Rate* correlates strongly with *Mental Fatigue Score* (0.94), *Resource Allocation* (0.86), and *Designation* (0.74), while *Tenure* showed near-zero correlation with all other features and was dropped.
+
+   <img src="images/Correlation_Matrix.png" alt="Feature correlation matrix" width="600"/>
+
+   Scatterplots against the target variable further confirmed these relationships, with Mental Fatigue Score showing the clearest non-linear association with Burn Rate.
+
+   <img src="images/Scatterplots.png" alt="Scatterplots of features vs Burn Rate" width="800"/>
+
 2. **Model comparison**: Seven regression models trained and validated via nested cross-validation (5 outer × 3 inner folds), evaluated using MAE, RMSE, and R², with paired statistical tests to confirm meaningful performance differences.
 3. **Hyperparameter tuning**: The best model, XGBoost, further optimized using Optuna's Tree-structured Parzen Estimator sampler across 100 trials.
 4. **Out-of-sample testing**: The tuned XGBoost model evaluated on a held-out test split of the public dataset, alongside diagnostic learning curve, residual, and feature importance plots.
+
+   <img src="images/LearningCurve_Residuals.png" alt="XGBoost learning curve and residuals plot" width="800"/>
+
+   <img src="images/Feature_Importance.png" alt="XGBoost feature importance" width="500"/>
+
 5. **Generalization test on new data**: Both the default-tuned and Optuna-tuned XGBoost models applied to a new dataset built from questionnaire-based data (randomly generated for this repository), aligned in structure to the original training features.
 
 ## Key Results
 
-- **XGBoost** was the best-performing model on the public dataset's validation and test splits (Test R² ≈ 0.928, MAE ≈ 0.043), closely followed by the Random Forest.
+- **XGBoost** was the best-performing model on the public dataset's validation and test splits (Test R² ≈ 0.928, MAE ≈ 0.043), closely followed by the Random Forest. On this held-out test set, the Optuna-tuned version performed on par with the originally grid-searched XGBoost, with no statistically significant difference between the two.
 - **Mental Fatigue Score** was by far the most influential predictor of burnout (~60% feature importance), followed by Resource Allocation (~25%) and Designation (~10%).
+- On the new questionnaire-based data, the **Optuna-tuned XGBoost outperformed the non-tuned version** (MAE 0.082 vs. 0.084, RMSE 0.103 vs. 0.105, R² 0.726 vs. 0.716), suggesting its tuned hyperparameters generalized somewhat better to this new, differently-sourced data.
 - Statistical testing confirmed XGBoost's advantage over most competing models, with no significant difference from Random Forest in MAE.
 
 ## Tools & Libraries
